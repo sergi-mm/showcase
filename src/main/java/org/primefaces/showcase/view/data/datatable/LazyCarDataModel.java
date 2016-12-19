@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.primefaces.showcase.domain.Car;
@@ -30,7 +31,7 @@ import org.primefaces.showcase.domain.Car;
 public class LazyCarDataModel extends LazyDataModel<Car> {
     
     private List<Car> datasource;
-    
+        
     public LazyCarDataModel(List<Car> datasource) {
         this.datasource = datasource;
     }
@@ -98,6 +99,7 @@ public class LazyCarDataModel extends LazyDataModel<Car> {
                 return data.subList(first, first + pageSize);
             }
             catch(IndexOutOfBoundsException e) {
+            	System.err.println(e.getMessage());
                 return data.subList(first, first + (dataSize % pageSize));
             }
         }
@@ -105,4 +107,10 @@ public class LazyCarDataModel extends LazyDataModel<Car> {
             return data;
         }
     }
+
+	public List<Car> getDatasource() {
+		return datasource;
+	}
+    
+    
 }

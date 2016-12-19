@@ -34,6 +34,9 @@
                 <p:column headerText="Color" sortBy="#{car.color}" filterBy="#{car.color}">
                     <h:outputText value="#{car.color}" />
                 </p:column>
+                <p:column headerText="Delete">
+                    <p:commandButton action="#{dtLazyView.deleteCar(car)}" icon="fa fa-trash" process="@this" update="carTable"/>
+                </p:column>                
             </p:dataTable>
 
             <p:dialog header="Car Detail" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">

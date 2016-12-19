@@ -16,12 +16,14 @@
 package org.primefaces.showcase.view.data.datatable;
 
 import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.showcase.domain.Car;
@@ -31,7 +33,7 @@ import org.primefaces.showcase.service.CarService;
 @ViewScoped
 public class LazyView implements Serializable {
     
-    private LazyDataModel<Car> lazyModel;
+    private LazyCarDataModel lazyModel;
     
     private Car selectedCar;
     
@@ -40,7 +42,7 @@ public class LazyView implements Serializable {
     
     @PostConstruct
     public void init() {
-        lazyModel = new LazyCarDataModel(service.createCars(200));
+        lazyModel = new LazyCarDataModel(service.createCars(21));
     }
 
     public LazyDataModel<Car> getLazyModel() {
@@ -62,5 +64,14 @@ public class LazyView implements Serializable {
     public void onRowSelect(SelectEvent event) {
         FacesMessage msg = new FacesMessage("Car Selected", ((Car) event.getObject()).getId());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    
+    public void deleteCar(Car car){
+    	if(car !=null){
+    		lazyModel.getDatasource().remove(car);
+    		FacesMessage msg = new FacesMessage("Car Deleted", car.getId());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+    	}
     }
 }
